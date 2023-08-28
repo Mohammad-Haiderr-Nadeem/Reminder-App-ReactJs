@@ -38,10 +38,7 @@ export default function ListOfTasks(props) {
     navigate(`/tasks/${id}`);
   };
 
-  const handleOnClickParagraph = (e, id) => {
-    navigate(`/tasks/${id}`);
-  };
-
+  
   return (
     <main>
       <div>
@@ -111,7 +108,7 @@ export default function ListOfTasks(props) {
                         fontWeight: "bold",
                         color: "black",
                       }}
-                      onClick={(e) => handleOnClickParagraph(e, task.id)}
+                      onClick={(e) => handleOnClickHeading(e, task.id)}
                     >
                       {task.dateAndTime}
                     </p>

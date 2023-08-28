@@ -10,11 +10,7 @@ export default function Tasks({ tasks, setTasks }) {
   const [myDate, setMyDate] = useState("");
   const [myTime, setMyTime] = useState("");
   const [description, setDescription] = useState("");
-  const [mergeDateAndTime, setMergeDateAndTime] = useState("");
-  const [formatDateAndTime, setFormatDateAndTime] = useState("");
   const [taskOpen, setTaskOpen] = useState(true);
-  const [toggleButton, setToggleButton] = useState("Close");
-  const [color, setColor] = useState("red");
   const [isReminderSet, setIsReminderSet] = useState(false);
 
   const handleSubmit = (e) => {
@@ -23,16 +19,8 @@ export default function Tasks({ tasks, setTasks }) {
   };
 
   useEffect(() => {
-    if (myDate && myTime) {
-      const mergedDateTime = myDate + " " + myTime;
-      setMergeDateAndTime(mergedDateTime);
-      const formattedDateTime = moment(mergedDateTime).format(
-        "MMMM Do YYYY h:mm a"
-      );
-      setFormatDateAndTime(formattedDateTime);
-    }
     getTaskList();
-  }, [myDate, myTime]);
+  }, []);
 
   const getTaskList = async () => {
     try {
@@ -50,7 +38,7 @@ export default function Tasks({ tasks, setTasks }) {
           text: task,
           date: myDate,
           time: myTime,
-          dateAndTime: mergeDateAndTime,
+          dateAndTime: `${myDate} ${myTime}`,
           desc: description,
           checked: isReminderSet,
         });
@@ -85,15 +73,7 @@ export default function Tasks({ tasks, setTasks }) {
   };
 
   const handleToggle = () => {
-    if (toggleButton === "Close") {
-      setTaskOpen(false);
-      setToggleButton("Open");
-      setColor("green");
-    } else if (toggleButton === "Open") {
-      setTaskOpen(true);
-      setToggleButton("Close");
-      setColor("red");
-    }
+    setTaskOpen(!taskOpen);
   };
 
   const handleReminderChange = () => {
@@ -113,18 +93,33 @@ export default function Tasks({ tasks, setTasks }) {
       <div className={styles.container}>
         <span style={{ fontWeight: "bold", fontSize: "40px", color: "black" }}>
           Task Tracker
-          <button
-            onClick={handleToggle}
-            style={{
-              backgroundColor: color,
-              color: "white",
-              padding: "5px",
-              width: "90px",
-              marginLeft: "10%",
-            }}
-          >
-            {toggleButton}
-          </button>
+          {taskOpen ? (
+            <button
+              onClick={handleToggle}
+              style={{
+                backgroundColor: "red",
+                color: "white",
+                padding: "5px",
+                width: "90px",
+                marginLeft: "5%",
+              }}
+            >
+              Open
+            </button>
+          ) : (
+            <button
+              onClick={handleToggle}
+              style={{
+                backgroundColor: "green",
+                color: "white",
+                padding: "5px",
+                width: "90px",
+                marginLeft: "5%",
+              }}
+            >
+              Close
+            </button>
+          )}
         </span>
 
         {taskOpen && (
@@ -139,6 +134,7 @@ export default function Tasks({ tasks, setTasks }) {
                   type="text"
                   name="task"
                   placeholder="Add Task"
+                  required
                   value={task}
                   onChange={handleOnChangeTask}
                   style={{ width: "95%", padding: "8px" }}
@@ -153,6 +149,7 @@ export default function Tasks({ tasks, setTasks }) {
                   type="date"
                   name="myDate"
                   placeholder="Please select your date.."
+                  required
                   value={myDate}
                   onChange={handleOnChangeDate}
                   style={{ width: "95%", padding: "8px" }}
@@ -167,6 +164,7 @@ export default function Tasks({ tasks, setTasks }) {
                   type="time"
                   name="myDate"
                   placeholder="Add time"
+                  required
                   value={myTime}
                   onChange={handleOnChangeTime}
                   style={{ width: "95%", padding: "8px" }}
@@ -181,6 +179,7 @@ export default function Tasks({ tasks, setTasks }) {
                   type="text"
                   name="task"
                   placeholder="Add Description"
+                  required
                   value={description}
                   onChange={handleOnChangeDescription}
                   style={{ width: "95%", padding: "8px" }}

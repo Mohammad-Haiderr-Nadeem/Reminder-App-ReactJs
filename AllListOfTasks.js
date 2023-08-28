@@ -9,15 +9,11 @@ export default function AllListOfTasks({ tasks, setTasks }) {
   const [editedDate, setEditedDate] = useState("");
   const [editedTime, setEditedTime] = useState("");
   const [editedIndex, setEditedIndex] = useState(-1);
-  const [editedDateAndTime, setEditedDateAndTime] = useState("");
   const [editedDescription, setEditedDescription] = useState(tasks.desc);
 
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (editedDate && editedTime) {
-      setEditedDateAndTime(`${editedDate} ${editedTime}`);
-    }
     fetchTask();
   }, []);
 
@@ -75,6 +71,7 @@ export default function AllListOfTasks({ tasks, setTasks }) {
         setEditedDate("");
         setEditedTime("");
         setEditedDescription("");
+        setCanEdit(false);
       } catch (error) {
         console.error("Error updating task:", error);
       }
@@ -85,7 +82,7 @@ export default function AllListOfTasks({ tasks, setTasks }) {
     <main>
       <div>
         {tasks.length ? (
-          <div>
+          <div className={styles.outerContainer}>
             <ol type="none">
               {tasks.map((task, index) => (
                 <li key={index}>

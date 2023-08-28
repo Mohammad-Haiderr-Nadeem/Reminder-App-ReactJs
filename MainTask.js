@@ -89,75 +89,77 @@ export default function MainTask({ tasks }) {
 
   return (
     <main>
-      <div className={styles.container}>
-        <button className={styles.myBackButton} onClick={handleBack}>
-          Back
-        </button>
-        <h1>{task.text}</h1>
-        <p>{task.desc}</p>
-        <p>{task.dateAndTime}</p>
-        <button className={styles.myEditButton} onClick={handleEdit}>
-          Edit
-        </button>
-        <br></br>
-        <br></br>
-        {canEdit && (
-          <form onSubmit={handleSubmit}>
-            <label htmlFor="Task">
-              <b>Task</b>
+      <div className={styles.outerContainer}>
+        <div className={styles.container}>
+          <button className={styles.myBackButton} onClick={handleBack}>
+            Back
+          </button>
+          <h1>{task.text}</h1>
+          <p>{task.desc}</p>
+          <p>{task.dateAndTime}</p>
+          <button className={styles.myEditButton} onClick={handleEdit}>
+            Edit
+          </button>
+          <br></br>
+          <br></br>
+          {canEdit && (
+            <form onSubmit={handleSubmit}>
+              <label htmlFor="Task">
+                <b>Task</b>
+                <br></br>
+                <input
+                  type="text"
+                  name="task"
+                  placeholder="write your task here..."
+                  value={editedText}
+                  onChange={handleOnChangeTask}
+                ></input>
+              </label>
               <br></br>
-              <input
-                type="text"
-                name="task"
-                placeholder="write your task here..."
-                value={editedText}
-                onChange={handleOnChangeTask}
-              ></input>
-            </label>
-            <br></br>
-            <label htmlFor="Date">
-              <b>Day</b>
+              <label htmlFor="Date">
+                <b>Day</b>
+                <br></br>
+                <input
+                  type="date"
+                  name="myDate"
+                  placeholder="Please select your date.."
+                  value={editedDate}
+                  onChange={handleOnChangeDate}
+                ></input>
+              </label>
               <br></br>
-              <input
-                type="date"
-                name="myDate"
-                placeholder="Please select your date.."
-                value={editedDate}
-                onChange={handleOnChangeDate}
-              ></input>
-            </label>
-            <br></br>
-            <label htmlFor="Time">
-              <b>Time</b>
+              <label htmlFor="Time">
+                <b>Time</b>
+                <br></br>
+                <input
+                  type="time"
+                  name="myTime"
+                  placeholder="Please select your time.."
+                  value={editedTime}
+                  onChange={handleOnChangeTime}
+                ></input>
+              </label>
               <br></br>
-              <input
-                type="time"
-                name="myTime"
-                placeholder="Please select your time.."
-                value={editedTime}
-                onChange={handleOnChangeTime}
-              ></input>
-            </label>
-            <br></br>
-            <label htmlFor="description">
-              <b>Description</b>
+              <label htmlFor="description">
+                <b>Description</b>
+                <br></br>
+                <input
+                  type="text"
+                  name="task"
+                  placeholder="write your description here..."
+                  value={editedDescription}
+                  onChange={handleOnChangeDescription}
+                ></input>
+              </label>
               <br></br>
-              <input
-                type="text"
-                name="task"
-                placeholder="write your description here..."
-                value={editedDescription}
-                onChange={handleOnChangeDescription}
-              ></input>
-            </label>
-            <br></br>
-            <button type="submit" className={styles.myUpdateButton}>
-              Update
-            </button>
-            <br></br>
-            <br></br>
-          </form>
-        )}
+              <button type="submit" className={styles.myUpdateButton}>
+                Update
+              </button>
+              <br></br>
+              <br></br>
+            </form>
+          )}
+        </div>
       </div>
     </main>
   );
