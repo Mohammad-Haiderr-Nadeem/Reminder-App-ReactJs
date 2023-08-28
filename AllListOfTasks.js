@@ -61,6 +61,7 @@ export default function AllListOfTasks({ tasks, setTasks }) {
           time: editedTime,
           desc: editedDescription,
           dateAndTime: `${editedDate} ${editedTime}`,
+          checked: tasks[index].checked,
         };
 
         await axios.put(`http://localhost:4000/myTasks/${id}`, updatedTask);

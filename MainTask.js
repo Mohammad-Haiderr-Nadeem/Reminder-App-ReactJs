@@ -65,7 +65,6 @@ export default function MainTask({ tasks }) {
       setEditedDate(date);
       setEditedTime(time);
     }
-
     setEditedDescription(task.desc);
   };
 
@@ -78,6 +77,7 @@ export default function MainTask({ tasks }) {
           time: editedTime,
           dateAndTime: `${editedDate} ${editedTime}`,
           desc: editedDescription,
+          checked: task.checked,
         });
       } catch (error) {
         console.error("Error updating task:", error);
@@ -86,8 +86,6 @@ export default function MainTask({ tasks }) {
     e.preventDefault();
     setCanEdit(false);
   };
-
-  
 
   return (
     <main>

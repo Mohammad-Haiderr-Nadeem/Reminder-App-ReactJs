@@ -10,14 +10,28 @@ export default function ListOfTasks(props) {
     navigate("/tasks/all");
   };
 
-  const handleDoubleClick = async (id, sameText, sameDate) => {
+  const handleDoubleClick = async (
+    id,
+    sameText,
+    sameDateAndTime,
+    sameDate,
+    sameTime,
+    sameDescription
+  ) => {
     try {
       await axios.put(`http://localhost:4000/myTasks/${id}`, {
+        id: id,
+        date: sameDate,
+        time: sameTime,
+        text: sameText,
+        dateAndTime: sameDateAndTime,
+        desc: sameDescription,
         checked: false,
       });
     } catch (error) {
       console.error("Error updating checked state:", error);
     }
+    props.getTaskList();
   };
 
   const handleOnClickHeading = (e, id) => {
@@ -33,7 +47,20 @@ export default function ListOfTasks(props) {
       <div>
         {props.tasks.length ? (
           <div>
-            <ol style={{listStyleType:'none'}}>
+            <br></br>
+            <button
+              className={styles.myToggleButton}
+              onClick={handleToggleShowAllTasks}
+            >
+              View More
+            </button>
+            <ol
+              style={{
+                listStyleType: "none",
+                marginLeft: "0",
+                paddingLeft: "0",
+              }}
+            >
               {props.tasks.slice(0, 2).map((task, index) => (
                 <li key={index}>
                   <div
@@ -41,32 +68,44 @@ export default function ListOfTasks(props) {
                       task.checked ? styles["reminder-set"] : ""
                     }`}
                     onDoubleClick={(e) =>
-                      handleDoubleClick(task.id, task.text, task.date)
+                      handleDoubleClick(
+                        task.id,
+                        task.text,
+                        task.dateAndTime,
+                        task.date,
+                        task.time,
+                        task.desc
+                      )
                     }
                   >
                     <div className={styles["reminder-corner"]} />
-                    <button
-                      style={{
-                        color: "red",
-                        backgroundColor: "beige",
-                        border: "none",
-                        marginLeft: "100%",
-                      }}
-                      onClick={() => props.deleteTask(task.id)}
-                    >
-                      X
-                    </button>
-
-                    <h1
-                      style={{
-                        fontWeight: "bold",
-                        color: "black",
-                      }}
-                      onClick={(e) => handleOnClickHeading(e, task.id)}
-                    >
-                      {task.text}
-                    </h1>
-
+                    <span>
+                      <span
+                        style={{
+                          fontWeight: "bold",
+                          color: "black",
+                          fontSize: "30px",
+                        }}
+                        onClick={(e) => handleOnClickHeading(e, task.id)}
+                      >
+                        {task.text}
+                      </span>
+                      <button
+                        style={{
+                          color: "red",
+                          backgroundColor: "beige",
+                          border: "none",
+                          fontWeight: "bold",
+                          fontSize: "20px",
+                          position: "absolute",
+                          top: "0",
+                          right: "0",
+                        }}
+                        onClick={() => props.deleteTask(task.id)}
+                      >
+                        X
+                      </button>
+                    </span>
                     <p
                       style={{
                         fontWeight: "bold",
@@ -80,12 +119,6 @@ export default function ListOfTasks(props) {
                   <br />
                 </li>
               ))}
-              <button
-                className={styles.myToggleButton}
-                onClick={handleToggleShowAllTasks}
-              >
-                View More
-              </button>
             </ol>
           </div>
         ) : (

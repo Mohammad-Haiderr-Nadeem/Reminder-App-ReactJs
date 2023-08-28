@@ -3,6 +3,7 @@ import styles from "./Tasks.module.css";
 import ListOfTasks from "./ListOfTasks";
 import axios from "axios";
 import moment from "moment";
+import { Link } from "react-router-dom";
 
 export default function Tasks({ tasks, setTasks }) {
   const [task, setTask] = useState("");
@@ -57,6 +58,7 @@ export default function Tasks({ tasks, setTasks }) {
         setTask("");
         setMyDate("");
         setDescription("");
+        setMyTime("");
       } catch (error) {
         console.error("Error adding task:", error);
       }
@@ -139,7 +141,7 @@ export default function Tasks({ tasks, setTasks }) {
                   placeholder="Add Task"
                   value={task}
                   onChange={handleOnChangeTask}
-                  style={{ width: "100%" }}
+                  style={{ width: "95%", padding: "8px" }}
                 ></input>
               </label>
               <br></br>
@@ -153,7 +155,7 @@ export default function Tasks({ tasks, setTasks }) {
                   placeholder="Please select your date.."
                   value={myDate}
                   onChange={handleOnChangeDate}
-                  style={{ width: "100%" }}
+                  style={{ width: "95%", padding: "8px" }}
                 ></input>
               </label>
               <br></br>
@@ -167,7 +169,7 @@ export default function Tasks({ tasks, setTasks }) {
                   placeholder="Add time"
                   value={myTime}
                   onChange={handleOnChangeTime}
-                  style={{ width: "100%" }}
+                  style={{ width: "95%", padding: "8px" }}
                 ></input>
               </label>
               <br></br>
@@ -181,13 +183,12 @@ export default function Tasks({ tasks, setTasks }) {
                   placeholder="Add Description"
                   value={description}
                   onChange={handleOnChangeDescription}
-                  style={{ width: "100%" }}
+                  style={{ width: "95%", padding: "8px" }}
                 ></input>
               </label>
               <br></br>
               <br></br>
               <label htmlFor="reminder" style={{ marginRight: "40%" }}>
-                {" "}
                 Set Reminder
               </label>
               <input type="checkbox" onChange={handleReminderChange} />
@@ -203,7 +204,13 @@ export default function Tasks({ tasks, setTasks }) {
           tasks={tasks}
           deleteTask={deleteTask}
           isReminderSet={isReminderSet}
+          getTaskList={getTaskList}
         ></ListOfTasks>
+        <Link to="/tasks/about">
+          <p style={{ textAlign: "center", color: "blue", fontWeight: "bold" }}>
+            About
+          </p>
+        </Link>
       </div>
     </main>
   );
