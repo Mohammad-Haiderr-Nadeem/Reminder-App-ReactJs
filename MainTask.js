@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import axios from "axios";
 import styles from "./MainTask.module.css";
+import Form from "./Form";
 
 export default function MainTask({ tasks }) {
   const { id } = useParams();
@@ -104,53 +105,16 @@ export default function MainTask({ tasks }) {
           <br></br>
           {canEdit && (
             <form onSubmit={handleSubmit}>
-              <label htmlFor="Task">
-                <b>Task</b>
-                <br></br>
-                <input
-                  type="text"
-                  name="task"
-                  placeholder="write your task here..."
-                  value={editedText}
-                  onChange={handleOnChangeTask}
-                ></input>
-              </label>
-              <br></br>
-              <label htmlFor="Date">
-                <b>Day</b>
-                <br></br>
-                <input
-                  type="date"
-                  name="myDate"
-                  placeholder="Please select your date.."
-                  value={editedDate}
-                  onChange={handleOnChangeDate}
-                ></input>
-              </label>
-              <br></br>
-              <label htmlFor="Time">
-                <b>Time</b>
-                <br></br>
-                <input
-                  type="time"
-                  name="myTime"
-                  placeholder="Please select your time.."
-                  value={editedTime}
-                  onChange={handleOnChangeTime}
-                ></input>
-              </label>
-              <br></br>
-              <label htmlFor="description">
-                <b>Description</b>
-                <br></br>
-                <input
-                  type="text"
-                  name="task"
-                  placeholder="write your description here..."
-                  value={editedDescription}
-                  onChange={handleOnChangeDescription}
-                ></input>
-              </label>
+              <Form
+                task={editedText}
+                handleOnChangeTask={handleOnChangeTask}
+                myDate={editedDate}
+                handleOnChangeDate={handleOnChangeDate}
+                myTime={editedTime}
+                handleOnChangeTime={handleOnChangeTime}
+                description={editedDescription}
+                handleOnChangeDescription={handleOnChangeDescription}
+              ></Form>
               <br></br>
               <button type="submit" className={styles.myUpdateButton}>
                 Update

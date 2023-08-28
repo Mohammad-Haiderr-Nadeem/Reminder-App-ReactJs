@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./AllListOfTasks.module.css";
 import axios from "axios";
+import Form from "./Form";
 
 export default function AllListOfTasks({ tasks, setTasks }) {
   const [canEdit, setCanEdit] = useState(false);
@@ -24,6 +25,21 @@ export default function AllListOfTasks({ tasks, setTasks }) {
     } catch (error) {
       console.error("Error fetching task:", error);
     }
+  };
+  const handleOnChangeTask = (e) => {
+    setEditedText(e.target.value);
+  };
+
+  const handleOnChangeDate = (e) => {
+    setEditedDate(e.target.value);
+  };
+
+  const handleOnChangeDescription = (e) => {
+    setEditedDescription(e.target.value);
+  };
+
+  const handleOnChangeTime = (e) => {
+    setEditedTime(e.target.value);
   };
 
   const handleBack = () => {
@@ -107,55 +123,18 @@ export default function AllListOfTasks({ tasks, setTasks }) {
                       <br></br>
                       {editedIndex === index && canEdit && (
                         <form onSubmit={(e) => handleSubmit(e, task.id, index)}>
-                          <label htmlFor="Task">
-                            <b>Task</b>
-                            <br></br>
-                            <input
-                              type="text"
-                              name="task"
-                              placeholder="write your task here..."
-                              value={editedText}
-                              onChange={(e) => setEditedText(e.target.value)}
-                            ></input>
-                          </label>
-                          <br></br>
-                          <label htmlFor="Date">
-                            <b>Day</b>
-                            <br></br>
-                            <input
-                              type="date"
-                              name="myDate"
-                              placeholder="Please select your date.."
-                              value={editedDate}
-                              onChange={(e) => setEditedDate(e.target.value)}
-                            ></input>
-                          </label>
-                          <br></br>
-                          <label htmlFor="Time">
-                            <b>Time</b>
-                            <br></br>
-                            <input
-                              type="time"
-                              name="myDate"
-                              placeholder="Please select your time.."
-                              value={editedTime}
-                              onChange={(e) => setEditedTime(e.target.value)}
-                            ></input>
-                          </label>
-                          <br></br>
-                          <label htmlFor="description">
-                            <b>Description</b>
-                            <br></br>
-                            <input
-                              type="text"
-                              name="task"
-                              placeholder="write your description here..."
-                              value={editedDescription}
-                              onChange={(e) =>
-                                setEditedDescription(e.target.value)
-                              }
-                            ></input>
-                          </label>
+                          <Form
+                            task={editedText}
+                            handleOnChangeTask={handleOnChangeTask}
+                            myDate={editedDate}
+                            handleOnChangeDate={handleOnChangeDate}
+                            myTime={editedTime}
+                            handleOnChangeTime={handleOnChangeTime}
+                            description={editedDescription}
+                            handleOnChangeDescription={
+                              handleOnChangeDescription
+                            }
+                          ></Form>
                           <br></br>
                           <button
                             type="submit"

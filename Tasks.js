@@ -4,6 +4,7 @@ import ListOfTasks from "./ListOfTasks";
 import axios from "axios";
 import moment from "moment";
 import { Link } from "react-router-dom";
+import Form from "./Form";
 
 export default function Tasks({ tasks, setTasks }) {
   const [task, setTask] = useState("");
@@ -127,64 +128,16 @@ export default function Tasks({ tasks, setTasks }) {
             <br></br>
             <br></br>
             <form onSubmit={handleSubmit}>
-              <label htmlFor="Task">
-                <b>Task</b>
-                <br></br>
-                <input
-                  type="text"
-                  name="task"
-                  placeholder="Add Task"
-                  required
-                  value={task}
-                  onChange={handleOnChangeTask}
-                  style={{ width: "95%", padding: "8px" }}
-                ></input>
-              </label>
-              <br></br>
-              <br></br>
-              <label htmlFor="Date">
-                <b>Day</b>
-                <br></br>
-                <input
-                  type="date"
-                  name="myDate"
-                  placeholder="Please select your date.."
-                  required
-                  value={myDate}
-                  onChange={handleOnChangeDate}
-                  style={{ width: "95%", padding: "8px" }}
-                ></input>
-              </label>
-              <br></br>
-              <br></br>
-              <label htmlFor="Time">
-                <b>Time</b>
-                <br></br>
-                <input
-                  type="time"
-                  name="myDate"
-                  placeholder="Add time"
-                  required
-                  value={myTime}
-                  onChange={handleOnChangeTime}
-                  style={{ width: "95%", padding: "8px" }}
-                ></input>
-              </label>
-              <br></br>
-              <br></br>
-              <label htmlFor="description">
-                <b>Description</b>
-                <br></br>
-                <input
-                  type="text"
-                  name="task"
-                  placeholder="Add Description"
-                  required
-                  value={description}
-                  onChange={handleOnChangeDescription}
-                  style={{ width: "95%", padding: "8px" }}
-                ></input>
-              </label>
+              <Form
+                task={task}
+                handleOnChangeTask={handleOnChangeTask}
+                myDate={myDate}
+                handleOnChangeDate={handleOnChangeDate}
+                myTime={myTime}
+                handleOnChangeTime={handleOnChangeTime}
+                description={description}
+                handleOnChangeDescription={handleOnChangeDescription}
+              ></Form>
               <br></br>
               <br></br>
               <label htmlFor="reminder" style={{ marginRight: "40%" }}>
