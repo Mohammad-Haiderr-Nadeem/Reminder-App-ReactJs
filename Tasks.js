@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import styles from "./Tasks.module.css";
 import ListOfTasks from "./ListOfTasks";
 import axios from "axios";
-import moment from "moment";
 import { Link } from "react-router-dom";
 import Form from "./Form";
 
@@ -39,7 +38,6 @@ export default function Tasks({ tasks, setTasks }) {
           text: task,
           date: myDate,
           time: myTime,
-          dateAndTime: `${myDate} ${myTime}`,
           desc: description,
           checked: isReminderSet,
         });
@@ -48,6 +46,7 @@ export default function Tasks({ tasks, setTasks }) {
         setMyDate("");
         setDescription("");
         setMyTime("");
+        isReminderSet(false);
       } catch (error) {
         console.error("Error adding task:", error);
       }

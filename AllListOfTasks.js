@@ -50,13 +50,8 @@ export default function AllListOfTasks({ tasks, setTasks }) {
     setCanEdit(!canEdit);
     setEditedIndex(index);
     setEditedText(tasks[index].text);
-
-    if (tasks[index].date) {
-      const [date, time] = tasks[index].dateAndTime.split(" ");
-      setEditedDate(date);
-      setEditedTime(time);
-    }
-
+    setEditedDate(tasks[index].date);
+    setEditedTime(tasks[index].time);
     setEditedDescription(tasks[index].desc);
   };
 
@@ -72,7 +67,6 @@ export default function AllListOfTasks({ tasks, setTasks }) {
           date: editedDate,
           time: editedTime,
           desc: editedDescription,
-          dateAndTime: `${editedDate} ${editedTime}`,
           checked: tasks[index].checked,
         };
 
@@ -99,7 +93,7 @@ export default function AllListOfTasks({ tasks, setTasks }) {
       <div>
         {tasks.length ? (
           <div className={styles.outerContainer}>
-            <ol type="none">
+            <ol style={{ listStyle: "none", paddingLeft: "0" }}>
               {tasks.map((task, index) => (
                 <li key={index}>
                   <div>
@@ -110,15 +104,18 @@ export default function AllListOfTasks({ tasks, setTasks }) {
                       >
                         Back
                       </button>
-                      <h1>{task.text}</h1>
-                      <p>{task.desc}</p>
-                      <p>{task.dateAndTime}</p>
                       <button
                         className={styles.myEditButton}
                         onClick={() => handleEdit(index)}
                       >
                         Edit
                       </button>
+                      <h1 style={{ paddingLeft: "30px" }}>{task.text}</h1>
+                      <p style={{ paddingLeft: "30px" }}>{task.desc}</p>
+                      <p style={{ paddingLeft: "30px" }}>
+                        {task.date} {task.time}
+                      </p>
+
                       <br></br>
                       <br></br>
                       {editedIndex === index && canEdit && (

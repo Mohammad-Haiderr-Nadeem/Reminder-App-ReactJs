@@ -11,16 +11,12 @@ export default function MainTask({ tasks }) {
   const [editedText, setEditedText] = useState("");
   const [editedDate, setEditedDate] = useState("");
   const [editedTime, setEditedTime] = useState("");
-  const [editedDateAndTime, setEditedDateAndTime] = useState("");
   const [editedDescription, setEditedDescription] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (editedDate && editedTime) {
-      setEditedDateAndTime(`${editedDate} ${editedTime}`);
-    }
     fetchTask(id);
-  }, [id, editedDate, editedTime]);
+  }, [id]);
 
   const fetchTask = async (taskId) => {
     try {
@@ -57,35 +53,53 @@ export default function MainTask({ tasks }) {
     setEditedTime(e.target.value);
   };
 
+  // const handleEdit = () => {
+  //   setCanEdit(!canEdit);
+  //   setEditedText(task.text);
+  //   setEditedDate(task.date);
+  //   setEditedTime(task.time);
+  //   setEditedDescription(task.desc);
+  // };
+
   const handleEdit = () => {
     setCanEdit(!canEdit);
-    setEditedText(task.text);
-
-    if (task.date) {
-      const [date, time] = task.dateAndTime.split(" ");
-      setEditedDate(date);
-      setEditedTime(time);
+    if (!editedText) {
+      setEditedText(task.text);
     }
-    setEditedDescription(task.desc);
+    if (!editedDate) {
+      setEditedDate(task.date);
+    }
+    if (!editedTime) {
+      setEditedTime(task.time);
+    }
+    if (!editedDescription) {
+      setEditedDescription(task.desc);
+    }
   };
 
   const handleSubmit = async (e) => {
-    if (editedText && editedDate) {
+    e.preventDefault();
+    if (editedText && editedDate && editedTime && editedDescription) {
       try {
-        await axios.put(`http://localhost:4000/myTasks/${id}`, {
+        const updatedTasks = {
           text: editedText,
           date: editedDate,
           time: editedTime,
-          dateAndTime: `${editedDate} ${editedTime}`,
           desc: editedDescription,
           checked: task.checked,
-        });
+        };
+
+        await axios.put(`http://localhost:4000/myTasks/${id}`, updatedTasks);
+        setEditedText("");
+        setEditedDate("");
+        setEditedTime("");
+        setEditedDescription("");
+        setCanEdit(false);
+        fetchTask(id);
       } catch (error) {
         console.error("Error updating task:", error);
       }
     }
-    e.preventDefault();
-    setCanEdit(false);
   };
 
   return (
@@ -95,16 +109,18 @@ export default function MainTask({ tasks }) {
           <button className={styles.myBackButton} onClick={handleBack}>
             Back
           </button>
-          <h1>{task.text}</h1>
-          <p>{task.desc}</p>
-          <p>{task.dateAndTime}</p>
+          <h1 style={{ paddingLeft: "30px" }}>{task.text}</h1>
+          <p style={{ paddingLeft: "30px" }}>{task.desc}</p>
+          <p style={{ paddingLeft: "30px" }}>
+            {task.date} {task.time}
+          </p>
           <button className={styles.myEditButton} onClick={handleEdit}>
             Edit
           </button>
           <br></br>
           <br></br>
           {canEdit && (
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={(e) => handleSubmit(e)}>
               <Form
                 task={editedText}
                 handleOnChangeTask={handleOnChangeTask}

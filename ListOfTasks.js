@@ -13,7 +13,6 @@ export default function ListOfTasks(props) {
   const handleDoubleClick = async (
     id,
     sameText,
-    sameDateAndTime,
     sameDate,
     sameTime,
     sameDescription
@@ -24,7 +23,6 @@ export default function ListOfTasks(props) {
         date: sameDate,
         time: sameTime,
         text: sameText,
-        dateAndTime: sameDateAndTime,
         desc: sameDescription,
         checked: false,
       });
@@ -68,7 +66,6 @@ export default function ListOfTasks(props) {
                       handleDoubleClick(
                         task.id,
                         task.text,
-                        task.dateAndTime,
                         task.date,
                         task.time,
                         task.desc
@@ -110,7 +107,7 @@ export default function ListOfTasks(props) {
                       }}
                       onClick={(e) => handleOnClickHeading(e, task.id)}
                     >
-                      {task.dateAndTime}
+                      {task.date} {task.time}
                     </p>
                   </div>
                   <br />
